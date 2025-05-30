@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import unicodedata
 
 app = Flask(__name__)
@@ -55,8 +55,28 @@ productos = [
 def normalizar(texto):
     return ''.join(c for c in unicodedata.normalize('NFD', texto.lower()) if unicodedata.category(c) != 'Mn')
 
+def obtener_pedidos_listos():
+    pedidos_listos = []
+    ahora = datetime.now()
+    for filename in os.listdir(CARPETA_CLIENTES):
+        if filename.endswith('.json'):
+            ruta = os.path.join(CARPETA_CLIENTES, filename)
+            with open(ruta) as f:
+                pedido = json.load(f)
+            if pedido.get('entregado'):
+                hora_listo = datetime.strptime(pedido['hora_listo'], "%Y-%m-%d %H:%M:%S") if 'hora_listo' in pedido else None
+                if hora_listo and (ahora - hora_listo).total_seconds() > 60:
+                    pedido['entregado'] = False
+                    del pedido['hora_listo']
+                    with open(ruta, 'w') as f:
+                        json.dump(pedido, f, indent=4)
+                else:
+                    pedidos_listos.append(pedido['nombre'])
+    return pedidos_listos
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    pedidos_listos = obtener_pedidos_listos()
     if request.method == 'POST':
         usuario = request.form['usuario']
         contrasena = request.form['contrasena']
@@ -66,7 +86,7 @@ def login():
         else:
             flash('Usuario o contraseña incorrectos')
             return redirect(url_for('login'))
-    return render_template('login.html', productos=productos)
+    return render_template('login.html', productos=productos, pedidos_listos=pedidos_listos)
 
 @app.route('/logout')
 def logout():
@@ -81,13 +101,7 @@ def verificar_sesion():
 
 @app.route('/')
 def index():
-    pedidos_listos = []
-    for filename in os.listdir(CARPETA_CLIENTES):
-        if filename.endswith('.json'):
-            with open(os.path.join(CARPETA_CLIENTES, filename)) as f:
-                pedido = json.load(f)
-                if pedido.get('entregado'):
-                    pedidos_listos.append(pedido['nombre'])
+    pedidos_listos = obtener_pedidos_listos()
     return render_template('index.html', productos=productos, pedidos_listos=pedidos_listos)
 
 @app.route('/iniciar_pedido', methods=['GET', 'POST'])
@@ -205,6 +219,7 @@ def marcar_listo(codigo):
         with open(archivo, 'r') as f:
             datos = json.load(f)
         datos['entregado'] = True
+        datos['hora_listo'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(archivo, 'w') as f:
             json.dump(datos, f, indent=4)
     return redirect(url_for('ver_pedidos'))
@@ -216,6 +231,7 @@ def desmarcar_listo(codigo):
         with open(archivo, 'r') as f:
             datos = json.load(f)
         datos['entregado'] = False
+        datos.pop('hora_listo', None)
         with open(archivo, 'w') as f:
             json.dump(datos, f, indent=4)
     return redirect(url_for('ver_pedidos'))
