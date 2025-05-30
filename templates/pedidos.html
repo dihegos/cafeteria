@@ -81,7 +81,7 @@
         <p><strong>Hora:</strong> {{ pedido['hora'] }}</p>
 
         {% if not pedido['entregado'] %}
-        <form action="{{ url_for('marcar_listo', codigo=pedido['codigo']) }}" method="POST">
+        <form action="{{ url_for('marcar_listo', codigo=pedido['codigo']) }}" method="POST" onsubmit="vibrarYsonar()">
             <button type="submit" class="listo-btn">Listo</button>
         </form>
         {% else %}
@@ -99,5 +99,18 @@
             <i class="fa-solid fa-trash"></i> Eliminar Todos los Pedidos
         </button>
     </form>
+
+    <!-- Sonido de notificación -->
+    <audio id="ding" src="{{ url_for('static', filename='ding.mp3') }}"></audio>
+
+    <script>
+    function vibrarYsonar() {
+        if ("vibrate" in navigator) {
+            navigator.vibrate(500);
+        }
+        var sonido = document.getElementById("ding");
+        sonido.play();
+    }
+    </script>
 </body>
 </html>
