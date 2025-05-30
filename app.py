@@ -66,8 +66,8 @@ def obtener_pedidos_listos():
             if pedido.get('entregado'):
                 hora_listo = datetime.strptime(pedido['hora_listo'], "%Y-%m-%d %H:%M:%S") if 'hora_listo' in pedido else None
                 if hora_listo and (ahora - hora_listo).total_seconds() > 60:
-                    pedido['entregado'] = False
-                    del pedido['hora_listo']
+                    # Eliminar solo el campo hora_listo para que el mensaje desaparezca
+                    pedido.pop('hora_listo', None)
                     with open(ruta, 'w') as f:
                         json.dump(pedido, f, indent=4)
                 else:
