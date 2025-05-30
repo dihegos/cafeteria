@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block content %}
     <h1>Bienvenido a la Cafetería</h1>
     <p>Para realizar un pedido, haz clic en el siguiente enlace:</p>
@@ -6,4 +7,15 @@
 
     <p>Para ver todos los pedidos, haz clic aquí:</p>
     <p><a href="{{ url_for('ver_pedidos') }}"><button>📦 Ver Pedidos</button></a></p>
+
+    {% if pedidos_listos %}
+    <div class="pedidos-listos" style="margin-top:30px; padding:15px; background-color:#fff3cd; border:1px solid #ffeeba; border-radius:8px;">
+        <h2 style="color:#856404;">📣 Pedidos Listos</h2>
+        <ul style="list-style: none; padding: 0;">
+            {% for nombre in pedidos_listos %}
+            <li style="font-weight: bold; color: #856404; margin:5px 0;">{{ nombre }}, tu pedido está listo. Pasa a recogerlo.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 {% endblock %}
