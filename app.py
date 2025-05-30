@@ -75,13 +75,20 @@ def logout():
 
 @app.before_request
 def verificar_sesion():
-    rutas_libres = ['login', 'static']
+    rutas_libres = ['login', 'static', 'index']
     if request.endpoint not in rutas_libres and 'usuario' not in session:
         return redirect(url_for('login'))
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    pedidos_listos = []
+    for filename in os.listdir(CARPETA_CLIENTES):
+        if filename.endswith('.json'):
+            with open(os.path.join(CARPETA_CLIENTES, filename)) as f:
+                pedido = json.load(f)
+                if pedido.get('entregado'):
+                    pedidos_listos.append(pedido['nombre'])
+    return render_template('index.html', productos=productos, pedidos_listos=pedidos_listos)
 
 @app.route('/iniciar_pedido', methods=['GET', 'POST'])
 def iniciar_pedido():
@@ -251,8 +258,5 @@ def eliminar_contabilidad():
     flash("Contabilidad del día eliminada.")
     return redirect(url_for('contabilidad'))
 
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
-
