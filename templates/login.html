@@ -47,6 +47,28 @@
             font-size: 0.9em;
             color: #555;
         }
+
+        .pedidos-listos {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 30px auto;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .pedidos-listos ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pedidos-listos li {
+            font-weight: bold;
+            color: #856404;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -79,5 +101,17 @@
         </div>
         {% endfor %}
     </div>
+
+    {% if pedidos_listos %}
+    <div class="pedidos-listos">
+        <h2>📣 Pedidos Listos</h2>
+        <ul>
+            {% for nombre in pedidos_listos %}
+            <li>{{ nombre }}, tu pedido está listo. Pasa a recogerlo.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
 </body>
 </html>
