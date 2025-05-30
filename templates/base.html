@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería - Pedidos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .user-info {
+            text-align: right;
+            font-size: 0.9em;
+            margin: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="user-info">
+        Bienvenido, <strong>{{ session.get('usuario') }}</strong>!
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2><i class="fa-solid fa-utensils"></i> Menú</h2>
+            <ul>
+                <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="{{ url_for('menu') }}"><i class="fa-solid fa-bowl-food"></i> Todos</a></li>
+                <li><a href="{{ url_for('menu', categoria='ensaladas') }}"><i class="fa-solid fa-leaf"></i> Ensaladas</a></li>
+                <li><a href="{{ url_for('menu', categoria='sandwich') }}"><i class="fa-solid fa-bread-slice"></i> Sandwich</a></li>
+                <li><a href="{{ url_for('menu', categoria='wraps') }}"><i class="fa-solid fa-burrito"></i> Wraps</a></li>
+                <li><a href="{{ url_for('menu', categoria='bebidas') }}"><i class="fa-solid fa-mug-hot"></i> Bebidas</a></li>
+                <li><a href="{{ url_for('menu', categoria='adicionales') }}"><i class="fa-solid fa-egg"></i> Adicionales</a></li>
+                <li><a href="{{ url_for('ver_pedidos') }}"><i class="fa-solid fa-box"></i> Ver Pedidos</a></li>
+
+                {% if session.get('usuario') == 'admin' %}
+                <li><a href="{{ url_for('contabilidad') }}"><i class="fa-solid fa-chart-line"></i> Contabilidad</a></li>
+                {% endif %}
+
+                <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

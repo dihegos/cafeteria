@@ -1,0 +1,30 @@
+{
+    "codigo": "2025-05-28_23-12-13",
+    "nombre": "Diego",
+    "pedido": [
+        {
+            "precio": 55.0,
+            "producto": "Burritos"
+        },
+        {
+            "precio": 65.0,
+            "producto": "Chilaquiles con Pollo"
+        },
+        {
+            "precio": 60.0,
+            "producto": "Emoladas"
+        },
+        {
+            "precio": 70.0,
+            "producto": "Torta de Chilaquiles"
+        },
+        {
+            "precio": 30.0,
+            "producto": "Caf\u00e9 Americano"
+        }
+    ],
+    "nota": "",
+    "total": 280.0,
+    "hora": "2025-05-28 23:12:13",
+    "entregado": false
+}

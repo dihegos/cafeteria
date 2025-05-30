@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos - Cocina</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .pedido {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        .entregado {
+            background-color: #c8e6c9;
+        }
+
+        button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .listo-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .desmarcar-btn {
+            background-color: #f0ad4e;
+            color: white;
+        }
+
+        .eliminar-todos {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .back-link {
+            margin: 20px 0;
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pedidos para la Cocina</h1>
+
+    <a href="{{ url_for('index') }}" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Home</a>
+
+    {% for pedido in pedidos %}
+    <div class="pedido {% if pedido['entregado'] %}entregado{% endif %}">
+        <p><strong>Código:</strong> {{ pedido['codigo'] }}</p>
+        <p><strong>Nombre:</strong> {{ pedido['nombre'] }}</p>
+        <p><strong>Pedido:</strong></p>
+        <ul>
+            {% for item in pedido['pedido'] %}
+            <li>{{ item['producto'] }} - ${{ item['precio'] }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Nota:</strong> {{ pedido['nota'] }}</p>
+        <p><strong>Total:</strong> ${{ pedido['total'] }}</p>
+        <p><strong>Hora:</strong> {{ pedido['hora'] }}</p>
+
+        {% if not pedido['entregado'] %}
+        <form action="{{ url_for('marcar_listo', codigo=pedido['codigo']) }}" method="POST">
+            <button type="submit" class="listo-btn">Listo</button>
+        </form>
+        {% else %}
+        <form action="{{ url_for('desmarcar_listo', codigo=pedido['codigo']) }}" method="POST">
+            <button type="submit" class="desmarcar-btn">Desmarcar</button>
+        </form>
+        {% endif %}
+    </div>
+    {% else %}
+    <p>No hay pedidos.</p>
+    {% endfor %}
+
+    <form action="{{ url_for('eliminar_todos') }}" method="POST" onsubmit="return confirm('¿Estás seguro que deseas eliminar todos los pedidos?');">
+        <button type="submit" class="eliminar-todos">
+            <i class="fa-solid fa-trash"></i> Eliminar Todos los Pedidos
+        </button>
+    </form>
+</body>
+</html>

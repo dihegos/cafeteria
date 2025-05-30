@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Resumen del Pedido</h1>
+    {% if pedido %}
+        <ul>
+            {% for p in pedido %}
+            <li>
+                {{ p.producto }} - ${{ p.precio }}
+                <form action="{{ url_for('eliminar_producto', indice=loop.index0) }}" method="post" style="display:inline;">
+                    <button type="submit">❌ Eliminar</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total: ${{ total }}</strong></p>
+
+        <form action="{{ url_for('resumen') }}" method="post">
+            <label for="nota">Recomendación o nota especial:</label>
+            <input type="text" name="nota" id="nota" placeholder="Sin cilantro, poca sal, etc." value="{{ nota }}">
+            <button type="submit">💾 Guardar Nota</button>
+        </form>
+
+        <a href="{{ url_for('confirmar_pedido') }}"><button>✅ Confirmar Pedido</button></a>
+        <a href="{{ url_for('menu') }}"><button>➕ Seguir pidiendo</button></a>
+    {% else %}
+        <p>No hay productos en el pedido.</p>
+    {% endif %}
+{% endblock %}

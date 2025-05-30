@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contabilidad - Resumen de Ventas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-link:hover {
+            background-color: #0056b3;
+        }
+        .eliminar-btn {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px auto;
+            display: block;
+            width: fit-content;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contabilidad del Día</h1>
+    <h2>Total de pedidos: {{ total_pedidos }}</h2>
+    <h2>Total de ventas: ${{ total_ventas }}</h2>
+
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad Vendida</th>
+            <th>Total Generado</th>
+        </tr>
+        {% for producto, datos in resumen.items() %}
+        <tr>
+            <td>{{ producto }}</td>
+            <td>{{ datos['cantidad'] }}</td>
+            <td>${{ datos['total'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <form action="{{ url_for('eliminar_contabilidad') }}" method="POST" onsubmit="return confirm('¿Estás seguro que deseas eliminar toda la contabilidad del día?');">
+        <button type="submit" class="eliminar-btn">
+            <i class="fa-solid fa-trash"></i> Eliminar Contabilidad del Día
+        </button>
+    </form>
+
+    <a href="{{ url_for('index') }}" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+</body>
+</html>

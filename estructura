@@ -1,0 +1,23 @@
+cafeteria/
+├── app.py
+├── clientes/
+│   └── (Aquí se guardan los pedidos en JSON)
+├── static/
+│   ├── images/
+│   │   ├── avena.jpg
+│   │   ├── burritos.jpeg
+│   │   ├── chilaquiles_pollo.jpg
+│   │   ├── chilaquiles_sencillos.jpg
+│   │   ├── emoladas.jpeg
+│   │   ├── enchiladas.jpg
+│   │   ├── hotcake+huevo.jpeg
+│   │   ├── hotcakes.jpg
+│   │   ├── omelet+chila.jpeg
+│   │   └── ordenguisado.jpg
+│   └── style.css
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   └── pedidos.html
+└── requirements.txt (Flask)
+

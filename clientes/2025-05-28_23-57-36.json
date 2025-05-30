@@ -1,0 +1,30 @@
+{
+    "codigo": "2025-05-28_23-57-36",
+    "nombre": "andres",
+    "pedido": [
+        {
+            "precio": 65.0,
+            "producto": "Chilaquiles con Pollo"
+        },
+        {
+            "precio": 40.0,
+            "producto": "Capuchino"
+        },
+        {
+            "precio": 35.0,
+            "producto": "Tostada de Guiso"
+        },
+        {
+            "precio": 35.0,
+            "producto": "Tostada de Guiso"
+        },
+        {
+            "precio": 35.0,
+            "producto": "Tostada de Queso"
+        }
+    ],
+    "nota": "si queso los chilaquiles",
+    "total": 210.0,
+    "hora": "2025-05-28 23:57:36",
+    "entregado": false
+}

@@ -1,0 +1,26 @@
+{
+    "codigo": "2025-05-29_14-28-06",
+    "nombre": "Tere",
+    "pedido": [
+        {
+            "precio": 65.0,
+            "producto": "Chilaquiles con Pollo"
+        },
+        {
+            "precio": 55.0,
+            "producto": "S\u00e1ndwich de Jam\u00f3n"
+        },
+        {
+            "precio": 40.0,
+            "producto": "Capuchino"
+        },
+        {
+            "precio": 35.0,
+            "producto": "Tostada de Queso"
+        }
+    ],
+    "nota": "sin cilantro ",
+    "total": 195.0,
+    "hora": "2025-05-29 14:28:06",
+    "entregado": true
+}

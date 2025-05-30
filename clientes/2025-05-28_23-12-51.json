@@ -1,0 +1,22 @@
+{
+    "codigo": "2025-05-28_23-12-51",
+    "nombre": "alexa",
+    "pedido": [
+        {
+            "precio": 60.0,
+            "producto": "Emoladas"
+        },
+        {
+            "precio": 35.0,
+            "producto": "Tostada de Queso"
+        },
+        {
+            "precio": 40.0,
+            "producto": "Capuchino"
+        }
+    ],
+    "nota": "",
+    "total": 135.0,
+    "hora": "2025-05-28 23:12:51",
+    "entregado": true
+}

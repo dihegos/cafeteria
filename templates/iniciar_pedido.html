@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Iniciar Pedido</h1>
+    <form action="{{ url_for('iniciar_pedido') }}" method="post">
+        <input type="text" name="nombre" placeholder="Tu nombre" required>
+        <button type="submit">Comenzar Pedido</button>
+    </form>
+{% endblock %}

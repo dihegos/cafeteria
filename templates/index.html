@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Bienvenido a la Cafetería</h1>
+    <p>Para realizar un pedido, haz clic en el siguiente enlace:</p>
+    <p><a href="{{ url_for('iniciar_pedido') }}"><button>👉 Hacer un pedido</button></a></p>
+
+    <p>Para ver todos los pedidos, haz clic aquí:</p>
+    <p><a href="{{ url_for('ver_pedidos') }}"><button>📦 Ver Pedidos</button></a></p>
+{% endblock %}
